@@ -18,7 +18,6 @@ public class TabularDataStructure<K, V> implements DataStructure<K, V> {
     public TabularDataStructure(final K[] headers, final List<V[]> data) {
         this.headers = Arrays.stream(headers).toList();
         this.dataRows = data.stream()
-                .skip(1)
                 .filter(Objects::nonNull)
                 .map(s -> {
                     var row = new RowDataElement<K, V>();

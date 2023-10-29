@@ -18,10 +18,11 @@ public record CsvFileReader(DataStructureFactory<String, String> dataStructureFa
     public DataStructure<String, String> readFileToDataStructure(final Path filePath) throws IOException {
         List<String[]> content = readAllLines(filePath);
         if (content.size() < 1) {
-         new RuntimeException("The input file did not contain any data!");
+         throw new  RuntimeException("The input file did not contain any data!");
         }
+
         return dataStructureFactory.produce(
-                content.stream().findFirst().get(),
+                content.stream().findFirst().orElseThrow(NullPointerException::new),
                 content.stream().skip(1).toList());
     }
 

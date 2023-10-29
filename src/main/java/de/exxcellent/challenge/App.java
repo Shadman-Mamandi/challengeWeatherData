@@ -45,7 +45,7 @@ public final class App {
      * @param spreadColumn2 The name of one of the columns that is used for calculating the spread.
      * @param resultColumn The name of the column that contains the resulting value.
      * @return The content of the resultColumn-cell in the row with the lowest spread between the given spread-columns.
-     * @throws Exception When the input file fails to load or the given columns are not found in the file.
+     * @throws IOException When the input file fails to load or the given columns are not found in the file.
      */
     private static String getMinSpread(final String csfFileName,
                                        final String spreadColumn1,

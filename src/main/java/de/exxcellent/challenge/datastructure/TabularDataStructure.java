@@ -5,7 +5,7 @@ import de.exxcellent.challenge.abstractions.DataStructure;
 import de.exxcellent.challenge.abstractions.DataElement;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.lang.reflect.Array;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;

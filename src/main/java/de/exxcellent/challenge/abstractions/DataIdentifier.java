@@ -8,5 +8,5 @@ public interface DataIdentifier<K> {
      * Retrieve the key that uniquely identifies a cell in a data element.
      * @return The key of the cell in a data element.
      */
-    K geK();
+    K getKey();
 }

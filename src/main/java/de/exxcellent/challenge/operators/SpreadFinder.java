@@ -70,8 +70,8 @@ public class SpreadFinder<K, V> {
         if (spreadCache.containsKey(row)) {
             return spreadCache.get(row);
         }
-        V strValue1 = row.geV(col1id);
-        V strValue2 = row.geV(col2id);
+        V strValue1 = row.geValue(col1id);
+        V strValue2 = row.geValue(col2id);
         int inV1 = Integer.parseInt(strValue1.toString());
         int inV2 = Integer.parseInt(strValue2.toString());
         int spread = Math.abs(inV1 - inV2);

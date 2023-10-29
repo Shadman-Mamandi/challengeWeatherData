@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class SpreadFinderTest {
 
     @Test
-    void getSpread1() {
+    void getSpread() {
         var resultCol = "result";
         var col1 = "col1";
         var col2 = "col2";
@@ -26,7 +26,7 @@ public class SpreadFinderTest {
         var minDataElement = spreadFinder.getDataElementByMinSpread(
                 dataStructure.createDataIdentifier(col1),
                 dataStructure.createDataIdentifier(col2));
-        String actual = minDataElement.geV(dataStructure.createDataIdentifier(resultCol));
+        String actual = minDataElement.geValue(dataStructure.createDataIdentifier(resultCol));
 
         Assertions.assertEquals("row2", actual);
     }

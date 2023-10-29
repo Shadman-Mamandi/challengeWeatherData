@@ -5,9 +5,11 @@ import de.exxcellent.challenge.abstractions.DataIdentifier;
 public record RowDataIdentifier<K>(K key) implements DataIdentifier<K> {
 
     @Override
-    public K geK() {
+    public K getKey() {
         return key;
     }
+
+
 }
 
 

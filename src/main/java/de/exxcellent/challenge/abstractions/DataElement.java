@@ -12,5 +12,5 @@ public interface DataElement<K, V> {
      *                   Example: the name of a column in a table.
      * @return The text in the cell.
      */
-    V geV(DataIdentifier<K> identifier);
+    V geValue(DataIdentifier<K> identifier);
 }

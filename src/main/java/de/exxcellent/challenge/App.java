@@ -6,6 +6,9 @@ import de.exxcellent.challenge.abstractions.DataStructureFactory;
 import de.exxcellent.challenge.csv.CsvFileReader;
 import de.exxcellent.challenge.datastructure.DataStructureFactoryImpl;
 import de.exxcellent.challenge.operators.SpreadFinder;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
@@ -47,7 +50,7 @@ public final class App {
     private static String getMinSpread(final String csfFileName,
                                        final String spreadColumn1,
                                        final String spreadColumn2,
-                                       final String resultColumn) throws Exception {
+                                       final String resultColumn) throws URISyntaxException, IOException {
         // the data structure factory can produce data structures,
         // thus decoupling the file reader from the concrete data structure implementation
         DataStructureFactory<String, String> dataStructureFactory = new DataStructureFactoryImpl<>();
@@ -74,6 +77,6 @@ public final class App {
         var elementWithMinSpread = spreadFinder.getDataElementByMinSpread(spreadColumn1Id, spreadColumn2Id);
 
         // return the value of the data cell defined by the given result column
-        return elementWithMinSpread.geV(resultColumnId);
+        return elementWithMinSpread.geValue(resultColumnId);
     }
 }

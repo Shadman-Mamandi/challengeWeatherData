@@ -15,11 +15,11 @@ public class RowDataElement<K, V> implements DataElement<K, V> {
     }
 
     @Override
-    public V geV(final DataIdentifier<K> identifier) {
-        if (!dataMap.containsKey(identifier.geK()))
+    public V geValue(final DataIdentifier<K> identifier) {
+        if (!dataMap.containsKey(identifier.getKey()))
             return null;
 
-        return dataMap.get(identifier.geK());
+        return dataMap.get(identifier.getKey());
     }
 
     @Override

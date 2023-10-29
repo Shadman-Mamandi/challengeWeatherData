@@ -9,7 +9,7 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-
+import java.util.Objects;
 
 
 public record CsvFileReader(DataStructureFactory<String, String> dataStructureFactory)
@@ -23,7 +23,7 @@ public record CsvFileReader(DataStructureFactory<String, String> dataStructureFa
 
         return dataStructureFactory.produce(
                 content.stream().findFirst().orElseThrow(NullPointerException::new),
-                content.stream().skip(1).toList());
+                content.stream().skip(1).filter(Objects::nonNull).toList());
     }
 
     private List<String[]> readAllLines(final Path filePath) throws IOException {

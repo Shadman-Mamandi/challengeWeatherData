@@ -4,8 +4,6 @@ import de.exxcellent.challenge.abstractions.DataIdentifier;
 import de.exxcellent.challenge.abstractions.DataStructure;
 import de.exxcellent.challenge.abstractions.DataElement;
 import org.apache.commons.lang3.tuple.Pair;
-
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -21,6 +19,7 @@ public class TabularDataStructure<K, V> implements DataStructure<K, V> {
         this.headers = Arrays.stream(headers).toList();
         this.dataRows = data.stream()
                 .skip(1)
+                .filter(Objects::nonNull)
                 .map(s -> {
                     var row = new RowDataElement<K, V>();
                     for (int i=0; i<this.headers.size(); i++) {

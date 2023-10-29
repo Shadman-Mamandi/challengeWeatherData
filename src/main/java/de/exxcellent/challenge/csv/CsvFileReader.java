@@ -4,23 +4,22 @@ import com.opencsv.CSVReader;
 import de.exxcellent.challenge.abstractions.DataStructure;
 import de.exxcellent.challenge.abstractions.DataStructureFactory;
 import de.exxcellent.challenge.abstractions.FileReader;
-
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-public class CsvFileReader implements FileReader {
+public record CsvFileReader(DataStructureFactory<String, String> dataStructureFactory)
+        implements FileReader<String, String> {
 
-    private final DataStructureFactory dataStructureFactory;
-
-    public CsvFileReader(final DataStructureFactory dataStructureFactory) {
-        this.dataStructureFactory = dataStructureFactory;
-    }
-
-    public DataStructure readFileToDataStructure(final Path filePath) throws Exception {
+    public DataStructure<String, String> readFileToDataStructure(final Path filePath) throws Exception {
         List<String[]> content = readAllLines(filePath);
-        return dataStructureFactory.produce(content);
+        if (content.size() < 1) {
+            throw new IndexOutOfBoundsException("The input file did not contain any data!");
+        }
+        return dataStructureFactory.produce(
+                content.stream().findFirst().get(),
+                content.stream().skip(1).toList());
     }
 
     private List<String[]> readAllLines(final Path filePath) throws Exception {

@@ -1,10 +1,8 @@
 package de.exxcellent.challenge;
 
 
-import de.exxcellent.challenge.abstractions.DataElement;
-import de.exxcellent.challenge.abstractions.DataStructure;
+
 import de.exxcellent.challenge.abstractions.DataStructureFactory;
-import de.exxcellent.challenge.abstractions.FileReader;
 import de.exxcellent.challenge.csv.CsvFileReader;
 import de.exxcellent.challenge.datastructure.DataStructureFactoryImpl;
 import de.exxcellent.challenge.operators.SpreadFinder;
@@ -44,7 +42,7 @@ public final class App {
      * @param spreadColumn2 The name of one of the columns that is used for calculating the spread.
      * @param resultColumn The name of the column that contains the resulting value.
      * @return The content of the resultColumn-cell in the row with the lowest spread between the given spread-columns.
-     * @throws Exception
+     * @throws Exception When the input file fails to load or the given columns are not found in the file.
      */
     private static String getMinSpread(final String csfFileName,
                                        final String spreadColumn1,
@@ -52,17 +50,17 @@ public final class App {
                                        final String resultColumn) throws Exception {
         // the data structure factory can produce data structures,
         // thus decoupling the file reader from the concrete data structure implementation
-        DataStructureFactory dataStructureFactory = new DataStructureFactoryImpl();
+        DataStructureFactory<String, String> dataStructureFactory = new DataStructureFactoryImpl<>();
 
         // the file reader loads csv data.
         // the constructor takes the factory to enable dependency injection / inversion of control.
-        FileReader fileReader = new CsvFileReader(dataStructureFactory);
+        var fileReader = new CsvFileReader(dataStructureFactory);
 
         // get the absolute path of the csv file
         Path csvFilePath = Paths.get(Objects.requireNonNull(App.class.getResource(csfFileName)).toURI());
 
         // read the csv file and load it into a data structure
-        DataStructure dataStructure = fileReader.readFileToDataStructure(csvFilePath);
+        var dataStructure = fileReader.readFileToDataStructure(csvFilePath);
 
         // create data identifiers that allow finding the cells in a data row of the data structure
         var spreadColumn1Id = dataStructure.createDataIdentifier(spreadColumn1);
@@ -70,12 +68,12 @@ public final class App {
         var resultColumnId = dataStructure.createDataIdentifier(resultColumn);
 
         // the spread finder works on arbitrary data structures
-        var spreadFinder = new SpreadFinder(dataStructure);
+        var spreadFinder = new SpreadFinder<>(dataStructure);
 
         // find the data row with the minimum spread between the two given columns
-        DataElement elementWithMinSpread = spreadFinder.getDataElementByMinSpread(spreadColumn1Id, spreadColumn2Id);
+        var elementWithMinSpread = spreadFinder.getDataElementByMinSpread(spreadColumn1Id, spreadColumn2Id);
 
         // return the value of the data cell defined by the given result column
-        return elementWithMinSpread.getValue(resultColumnId);
+        return elementWithMinSpread.geV(resultColumnId);
     }
 }

@@ -2,25 +2,24 @@ package de.exxcellent.challenge.datastructure;
 
 import de.exxcellent.challenge.abstractions.DataIdentifier;
 import de.exxcellent.challenge.abstractions.DataElement;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class RowDataElement implements DataElement {
-    private final Map<String, String> dataMap = new HashMap<>();
+public class RowDataElement<K, V> implements DataElement<K, V> {
+    private final Map<K, V> dataMap = new HashMap<>();
 
-    public void addValue(final String key, final String value) {
+    public void addValue(final K key, final V value) {
         this.dataMap.put(key, value);
     }
 
     @Override
-    public String getValue(final DataIdentifier identifier) {
-        if (!dataMap.containsKey(identifier.getKey()))
+    public V geV(final DataIdentifier<K> identifier) {
+        if (!dataMap.containsKey(identifier.geK()))
             return null;
 
-        return dataMap.get(identifier.getKey());
+        return dataMap.get(identifier.geK());
     }
 
     @Override

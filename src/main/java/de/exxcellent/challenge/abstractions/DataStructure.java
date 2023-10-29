@@ -1,13 +1,12 @@
 package de.exxcellent.challenge.abstractions;
 
 import org.apache.commons.lang3.tuple.Pair;
-
 import java.util.function.Function;
 
 /**
  * A data structure for holding arbitrary data elements and executing algorithms on the data.
  */
-public interface DataStructure {
+public interface DataStructure<K, V> {
     /**
      * The find function iterates over all data elements,
      * comparing the result of the previous comparison with the currently visited data element.
@@ -15,7 +14,9 @@ public interface DataStructure {
      * @param compareFunction A function for comparing two data elements.
      * @return The data element that is the result of comparing all data elements in the data structure with each other.
      */
-    DataElement find(Function<Pair<DataElement, DataElement>, DataElement> compareFunction);
+    DataElement<K, V> find(Function<
+            Pair<DataElement<K, V>, DataElement<K, V>>,
+            DataElement<K, V>> compareFunction);
 
     /**
      * Creates an identifier for a data cell in a data element.
@@ -24,5 +25,5 @@ public interface DataStructure {
      *                      that identifies this field in a data element of the data structure.
      * @return The identifier, or NULL if the data field is not found in the data structure.
      */
-    DataIdentifier createDataIdentifier(String dataFieldName);
+    DataIdentifier<K> createDataIdentifier(K dataFieldName);
 }

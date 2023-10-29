@@ -3,7 +3,6 @@ package de.exxcellent.challenge.operators;
 import de.exxcellent.challenge.abstractions.DataIdentifier;
 import de.exxcellent.challenge.abstractions.DataStructure;
 import de.exxcellent.challenge.abstractions.DataElement;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,17 +10,17 @@ import java.util.Map;
  * The SpreadFinder calculates the spread between two given data cells
  * in all data elements of a data structure.
  */
-public class SpreadFinder {
-    private final DataStructure dataStructure;
+public class SpreadFinder<K, V> {
+    private final DataStructure<K, V> dataStructure;
     // this cache keeps the calculated spreads for each row to prevent duplicate calculations
-    private final Map<DataElement, Integer> spreadCache = new HashMap<>();
+    private final Map<DataElement<K, V>, Integer> spreadCache = new HashMap<>();
 
     /**
      * Initializes a new instance of the SpreadFinder class.
      * @param dataStructure The data structure where the SpreadFinder
      *                      will find data elements for calculating the spread.
      */
-    public SpreadFinder(final DataStructure dataStructure) {
+    public SpreadFinder(final DataStructure<K, V> dataStructure) {
         this.dataStructure = dataStructure;
     }
 
@@ -31,11 +30,11 @@ public class SpreadFinder {
      *                        This cell-1 is used to calculate the spread to cell-2.
      * @param column2Identity The identifier of a cell in a data element of the data structure.
      *                        This cell-2 is used to calculate the spread to cell-1.
-     * @return
+     * @return The data element with the lowest spread.
      */
-    public DataElement getDataElementByMinSpread(
-            final DataIdentifier column1Identity,
-            final DataIdentifier column2Identity) {
+    public DataElement<K, V> getDataElementByMinSpread(
+            final DataIdentifier<K> column1Identity,
+            final DataIdentifier<K> column2Identity) {
         // check if the identifiers are valid
         if (column1Identity == null || column2Identity == null)
             throw new IllegalArgumentException("Column names are not found in the data set");
@@ -65,17 +64,17 @@ public class SpreadFinder {
      * @param col2id The id of one column for the spread calculation.
      * @return The spread between column 1 and column 2.
      */
-    private int calculateSpread(DataElement row,
-                                DataIdentifier col1id,
-                                DataIdentifier col2id) {
+    private int calculateSpread(DataElement<K, V> row,
+                                DataIdentifier<K> col1id,
+                                DataIdentifier<K> col2id) {
         if (spreadCache.containsKey(row)) {
             return spreadCache.get(row);
         }
-        String strValue1 = row.getValue(col1id);
-        String strValue2 = row.getValue(col2id);
-        int intValue1 = Integer.parseInt(strValue1);
-        int intValue2 = Integer.parseInt(strValue2);
-        int spread = Math.abs(intValue1 - intValue2);
+        V strValue1 = row.geV(col1id);
+        V strValue2 = row.geV(col2id);
+        int inV1 = Integer.parseInt(strValue1.toString());
+        int inV2 = Integer.parseInt(strValue2.toString());
+        int spread = Math.abs(inV1 - inV2);
         spreadCache.put(row, spread);
         return spread;
     }

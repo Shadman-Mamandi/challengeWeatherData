@@ -2,14 +2,11 @@ package de.exxcellent.challenge.datastructure;
 
 import de.exxcellent.challenge.abstractions.DataStructure;
 import de.exxcellent.challenge.abstractions.DataStructureFactory;
-
 import java.util.List;
 
-public class DataStructureFactoryImpl implements DataStructureFactory {
+public class DataStructureFactoryImpl<K, V> implements DataStructureFactory<K, V> {
     @Override
-    public DataStructure produce(List<String[]> tabularData) {
-        var structure = new TabularDataStructure();
-        structure.addData(tabularData);
-        return structure;
+    public DataStructure<K, V> produce(K[] keys, List<V[]> tabularData) {
+        return new TabularDataStructure<>(keys, tabularData);
     }
 }
